@@ -1,11 +1,10 @@
 {
-	"id": "sample-plugin",
-	"name": "Sample Plugin",
-	"version": "1.0.0",
+	"id": "janitor-dpvpro",
+	"name": "Janitor (Dpvpro)",
+	"version": "1.2.0",
 	"minAppVersion": "0.15.0",
-	"description": "Demonstrates some of the capabilities of the Obsidian API.",
-	"author": "Obsidian",
-	"authorUrl": "https://obsidian.md",
-	"fundingUrl": "https://obsidian.md/pricing",
+	"description": "Performs cleanup tasks on the Obsidian vault",
+	"author": "Denis Proskurin",
+	"authorUrl": "https://github.com/dpvpro",
 	"isDesktopOnly": false
 }
