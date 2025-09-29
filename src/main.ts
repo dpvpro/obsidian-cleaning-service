@@ -193,9 +193,7 @@ export default class JanitorPlugin extends Plugin {
 			(results.emptyDirectories && results.emptyDirectories.length);
 		this.updateStatusBar("");
 		if (!foundSomething) {
-			new Notice(
-				`Cleaning Sservice scanned and found nothing to cleanup`,
-			);
+			new Notice(`Cleaning Service scanned and found nothing to cleanup`);
 			return;
 		}
 		// We determine if we have to prompt the user,
