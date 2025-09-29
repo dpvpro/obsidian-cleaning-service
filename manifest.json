@@ -1,7 +1,7 @@
 {
-	"id": "janitor-dpvpro",
-	"name": "Janitor (Dpvpro)",
-	"version": "1.2.0",
+	"id": "cleaning-service",
+	"name": "Cleaning Service",
+	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
 	"description": "Performs cleanup tasks on the Obsidian vault",
 	"author": "Denis Proskurin",
