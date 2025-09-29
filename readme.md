@@ -45,3 +45,7 @@ Cleaning service scan can also be launched from a ribbon button or from commands
 ## Copyrights
 
 This plugin is fork [obsidian-janitor](https://github.com/canna71/obsidian-janitor) plugin.
+
+## History
+
+First version of app was writen "Tue Jul 15 17:44:37 2025 +0300".
