@@ -3,7 +3,7 @@
 	"name": "Cleaning Service",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "Performs cleanup tasks on the Obsidian vault",
+	"description": "Performs cleanup tasks on the vault",
 	"author": "Denis Proskurin",
 	"authorUrl": "https://github.com/dpvpro",
 	"isDesktopOnly": false
