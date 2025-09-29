@@ -78,19 +78,19 @@ export default class JanitorPlugin extends Plugin {
 			"set-expiration-1week",
 			"Set Expiration (1 week)",
 			1,
-			"week"
+			"week",
 		);
 		this.createShortcutCommand(
 			"set-expiration-1month",
 			"Set Expiration (1 month)",
 			1,
-			"month"
+			"month",
 		);
 		this.createShortcutCommand(
 			"set-expiration-1year",
 			"Set Expiration (1 year)",
 			1,
-			"year"
+			"year",
 		);
 
 		this.addSettingTab(new JanitorSettingsTab(this.app, this));
@@ -124,7 +124,7 @@ export default class JanitorPlugin extends Plugin {
 							markdownView,
 							moment()
 								.add(n, w)
-								.format(this.settings.expiredDateFormat)
+								.format(this.settings.expiredDateFormat),
 						);
 					}
 					return true;
@@ -140,7 +140,7 @@ export default class JanitorPlugin extends Plugin {
 
 	async updateNoteWithDate(view: MarkdownView, dateToSet: string) {
 		const metaData = this.app.metadataCache.getFileCache(
-			view.file
+			view.file,
 		)?.frontmatter;
 		let start = metaData?.position.start.offset || 0;
 		let end = metaData?.position.end.offset || 0;
@@ -164,7 +164,7 @@ export default class JanitorPlugin extends Plugin {
 			view.editor.replaceRange(
 				frontMatter,
 				view.editor.offsetToPos(start),
-				view.editor.offsetToPos(end)
+				view.editor.offsetToPos(end),
 			);
 		} else {
 			const newContent =
@@ -180,8 +180,8 @@ export default class JanitorPlugin extends Plugin {
 	}
 
 	private async scanFiles(forcePrompt = false, noPrompt = false) {
-		new Notice("Janitor is scanning vault");
-		this.updateStatusBar("Janitor Scanning...");
+		new Notice("Cleaning Service is scanning vault");
+		this.updateStatusBar("Cleaning Service Scanning...");
 		let modal;
 		const results = await new FileScanner(this.app, this.settings).scan();
 		// artificially introduce waiting for testing purposes
@@ -194,7 +194,9 @@ export default class JanitorPlugin extends Plugin {
 			(results.emptyDirectories && results.emptyDirectories.length);
 		this.updateStatusBar("");
 		if (!foundSomething) {
-			new Notice(`Janitor scanned and found nothing to cleanup`);
+			new Notice(
+				`Cleaning Sservice scanned and found nothing to cleanup`,
+			);
 			return;
 		}
 		// We determine if we have to prompt the user,
@@ -221,13 +223,16 @@ export default class JanitorPlugin extends Plugin {
 				results.big,
 			].flatMap((list) => (list ? list.map((file) => file.path) : []));
 			files = [...new Set(files)];
-			
+
 			// Handle empty directories separately
 			const directories = results.emptyDirectories || [];
-			
+
 			await this.perform(this.settings.defaultOperation, files);
 			if (directories.length > 0) {
-				await this.performOnDirectories(this.settings.defaultOperation, directories);
+				await this.performOnDirectories(
+					this.settings.defaultOperation,
+					directories,
+				);
 			}
 		}
 	}
@@ -239,18 +244,24 @@ export default class JanitorPlugin extends Plugin {
 			`${processingResult.deletedFiles} files deleted.` +
 				(processingResult.notDeletedFiles
 					? `${processingResult.notDeletedFiles} files not deleted`
-					: "")
+					: ""),
 		);
 	}
 
-	async performOnDirectories(operation: OperationType, directories: string[]) {
+	async performOnDirectories(
+		operation: OperationType,
+		directories: string[],
+	) {
 		const fileProcessor = new FileProcessor(this.app);
-		const processingResult = await fileProcessor.processDirectories(directories, operation);
+		const processingResult = await fileProcessor.processDirectories(
+			directories,
+			operation,
+		);
 		new Notice(
 			`${processingResult.deletedFiles} folders deleted.` +
 				(processingResult.notDeletedFiles
 					? `${processingResult.notDeletedFiles} folders not deleted`
-					: "")
+					: ""),
 		);
 	}
 
@@ -260,10 +271,10 @@ export default class JanitorPlugin extends Plugin {
 		this.removeIcon();
 		this.ribbonIconEl = this.addRibbonIcon(
 			"trash",
-			"Janitor: scan vault",
+			"Cleaning service: scan vault",
 			(evt: MouseEvent) => {
 				this.scanFiles();
-			}
+			},
 		);
 		this.ribbonIconEl.addClass("janitor-ribbon-class");
 	}
@@ -278,7 +289,7 @@ export default class JanitorPlugin extends Plugin {
 		this.settings = Object.assign(
 			{},
 			DEFAULT_SETTINGS,
-			await this.loadData()
+			await this.loadData(),
 		);
 	}
 

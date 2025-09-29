@@ -1,4 +1,4 @@
-import { ExcludedFilesModal } from './Views/ExcludedFilesModal';
+import { ExcludedFilesModal } from "./Views/ExcludedFilesModal";
 import { DEFAULT_SETTINGS } from "src/JanitorSettings";
 import JanitorPlugin from "./main";
 import { App, PluginSettingTab, Setting } from "obsidian";
@@ -16,39 +16,38 @@ export default class JanitorSettingsTab extends PluginSettingTab {
 
 		containerEl.empty();
 
-		containerEl.createEl("h2", { text: "Janitor settings" });
-
+		containerEl.createEl("h2", { text: "Cleaning service settings" });
 
 		new Setting(containerEl)
 			.setName("Add ribbon icon")
 			.setDesc("Adds an icon to the ribbon to launch scan")
-			.addToggle(bool => bool
-				.setValue(this.plugin.settings.addRibbonIcon)
-				.onChange(async (value) => {
-					this.plugin.settings.addRibbonIcon = value;
-					await this.plugin.saveSettings();
-                    if(value){
-                        this.plugin.addIcon();
-                    } else {
-                        this.plugin.removeIcon();
-                    }
-					this.display();
-				})
+			.addToggle((bool) =>
+				bool
+					.setValue(this.plugin.settings.addRibbonIcon)
+					.onChange(async (value) => {
+						this.plugin.settings.addRibbonIcon = value;
+						await this.plugin.saveSettings();
+						if (value) {
+							this.plugin.addIcon();
+						} else {
+							this.plugin.removeIcon();
+						}
+						this.display();
+					}),
 			);
 
 		this.createToggle(
 			containerEl,
 			"Run at startup",
 			"The plugin will perform a scan automatically everytime you open a vault.",
-			"runAtStartup"
+			"runAtStartup",
 		);
-
 
 		this.createToggle(
 			containerEl,
 			"Ask confirmation",
 			"The user will be able to select which files to remove",
-			"promptUser"
+			"promptUser",
 		);
 
 		new Setting(containerEl)
@@ -60,7 +59,7 @@ export default class JanitorSettingsTab extends PluginSettingTab {
 					.onChange(async (value) => {
 						this.plugin.settings.promptForBigFiles = value;
 						await this.plugin.saveSettings();
-					})
+					}),
 			);
 
 		new Setting(containerEl).setHeading();
@@ -69,32 +68,32 @@ export default class JanitorSettingsTab extends PluginSettingTab {
 			containerEl,
 			"Process orphans",
 			"Remove media and attachments that are not in use",
-			"processOrphans"
+			"processOrphans",
 		);
 		this.createToggle(
 			containerEl,
 			"Process empty files",
 			"Remove empty files or files with only whitespace",
-			"processEmpty"
+			"processEmpty",
 		);
 		this.createToggle(
 			containerEl,
 			"Process empty directories",
 			"Remove empty directories from the vault",
-			"processEmptyDirectories"
+			"processEmptyDirectories",
 		);
 		this.createToggle(
 			containerEl,
 			"Process big files",
 			"Removes files with big dimensions",
-			"processBig"
+			"processBig",
 		);
 
 		if (this.plugin.settings.processBig) {
 			new Setting(containerEl)
 				.setName("File size limit (KB)")
 				.setDesc(
-					"Files larger than this size will be considered for removal."
+					"Files larger than this size will be considered for removal.",
 				)
 				.addText((num) =>
 					num
@@ -108,7 +107,7 @@ export default class JanitorSettingsTab extends PluginSettingTab {
 									DEFAULT_SETTINGS.sizeLimitKb;
 							}
 							await this.plugin.saveSettings();
-						})
+						}),
 				);
 		}
 
@@ -116,7 +115,7 @@ export default class JanitorSettingsTab extends PluginSettingTab {
 			containerEl,
 			"Process expired",
 			"Remove notes that have expired",
-			"processExpired"
+			"processExpired",
 		);
 
 		if (this.plugin.settings.processExpired) {
@@ -125,7 +124,7 @@ export default class JanitorSettingsTab extends PluginSettingTab {
 			new Setting(containerEl)
 				.setName("Metadata attribute")
 				.setDesc(
-					"The frontMatter key in which to search for expiration date"
+					"The frontMatter key in which to search for expiration date",
 				)
 				.addText((date) =>
 					date
@@ -134,12 +133,12 @@ export default class JanitorSettingsTab extends PluginSettingTab {
 						.onChange(async (value) => {
 							this.plugin.settings.expiredAttribute = value;
 							await this.plugin.saveSettings();
-						})
+						}),
 				);
 			new Setting(containerEl)
 				.setName("Date format")
 				.setDesc(
-					"The format in which the expiration date is stored (e.g. YYYY-MM-DD)"
+					"The format in which the expiration date is stored (e.g. YYYY-MM-DD)",
 				)
 				.addText((text) =>
 					text
@@ -148,7 +147,7 @@ export default class JanitorSettingsTab extends PluginSettingTab {
 						.onChange(async (value) => {
 							this.plugin.settings.expiredDateFormat = value;
 							await this.plugin.saveSettings();
-						})
+						}),
 				);
 		}
 
@@ -158,43 +157,43 @@ export default class JanitorSettingsTab extends PluginSettingTab {
 			containerEl,
 			"Ignore obsidian excluded files",
 			"Does not process files matching the Excluded Files filters in Obsidian Settings",
-			"honorObsidianExcludedFiles"
+			"honorObsidianExcludedFiles",
 		);
 
-
-
 		const exclusionSetting = new Setting(containerEl)
-		.setName("Excluded files")
-		.setDesc("Excluded files will not be processed")
-		.addButton(cb => {
-			cb.setButtonText("Manage");
-			cb.onClick((evt:MouseEvent)=>{
-				new ExcludedFilesModal(this.app, this.plugin.settings,
-					async (filters:string[])=>{
-						this.plugin.settings.excludedFilesFilters = filters;
-						await this.plugin.saveSettings();
-						this.display();
-					})
-					.open();
-			})
-		});
+			.setName("Excluded files")
+			.setDesc("Excluded files will not be processed")
+			.addButton((cb) => {
+				cb.setButtonText("Manage");
+				cb.onClick((evt: MouseEvent) => {
+					new ExcludedFilesModal(
+						this.app,
+						this.plugin.settings,
+						async (filters: string[]) => {
+							this.plugin.settings.excludedFilesFilters = filters;
+							await this.plugin.saveSettings();
+							this.display();
+						},
+					).open();
+				});
+			});
 
-		if(this.plugin.settings.excludedFilesFilters && this.plugin.settings.excludedFilesFilters.length){
+		if (
+			this.plugin.settings.excludedFilesFilters &&
+			this.plugin.settings.excludedFilesFilters.length
+		) {
 			const ul = exclusionSetting.descEl.createEl("ul");
-			this.plugin.settings.excludedFilesFilters.forEach(filter=>{
+			this.plugin.settings.excludedFilesFilters.forEach((filter) => {
 				ul.createEl("li").setText(filter);
-			})
+			});
 		}
-
-
-
 	}
 
 	private createToggle(
 		containerEl: HTMLElement,
 		name: string,
 		desc: string,
-		prop: string
+		prop: string,
 	) {
 		new Setting(containerEl)
 			.setName(name)
@@ -206,7 +205,7 @@ export default class JanitorSettingsTab extends PluginSettingTab {
 						(this.plugin.settings as any)[prop] = value;
 						await this.plugin.saveSettings();
 						this.display();
-					})
+					}),
 			);
 	}
 }
