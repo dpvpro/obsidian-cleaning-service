@@ -2,15 +2,7 @@ import { DatePickerModal } from "./Views/DatePickerModal";
 import { OperationType } from "./JanitorSettings";
 import { JanitorModal } from "./Views/JanitorModal";
 
-import {
-	Editor,
-	MarkdownView,
-	Notice,
-	Plugin,
-	stringifyYaml,
-	TFile,
-	View,
-} from "obsidian";
+import { MarkdownView, Notice, Plugin, stringifyYaml } from "obsidian";
 import { FileScanner } from "src/FileScanner";
 import { DEFAULT_SETTINGS, JanitorSettings } from "src/JanitorSettings";
 import JanitorSettingsTab from "src/PluginSettingsTab";
@@ -111,7 +103,12 @@ export default class JanitorPlugin extends Plugin {
 
 	frontMatterRegEx = /^---$(.*)^---/ms;
 
-	private createShortcutCommand(id: string, name: string, n: number, w: any) {
+	private createShortcutCommand(
+		id: string,
+		name: string,
+		n: number,
+		w: moment.unitOfTime.DurationConstructor,
+	) {
 		this.addCommand({
 			id: id,
 			name: name,
@@ -139,9 +136,11 @@ export default class JanitorPlugin extends Plugin {
 	}
 
 	async updateNoteWithDate(view: MarkdownView, dateToSet: string) {
-		const metaData = this.app.metadataCache.getFileCache(
-			view.file,
-		)?.frontmatter;
+		if (!view.file) {
+			return;
+		}
+		const file = view.file;
+		const metaData = this.app.metadataCache.getFileCache(file)?.frontmatter;
 		let start = metaData?.position.start.offset || 0;
 		let end = metaData?.position.end.offset || 0;
 		// no metadata could also mean empty metadata secion
@@ -151,7 +150,7 @@ export default class JanitorPlugin extends Plugin {
 			position: undefined,
 		};
 		const newYaml = stringifyYaml(newMetadata);
-		const content = await this.app.vault.cachedRead(view.file);
+		const content = await this.app.vault.cachedRead(file);
 		const m = this.frontMatterRegEx.exec(content);
 		if (!metaData && m) {
 			//empty frontmatter
@@ -171,7 +170,7 @@ export default class JanitorPlugin extends Plugin {
 				content.substring(0, start) +
 				frontMatter +
 				content.substring(end);
-			this.app.vault.modify(view.file, newContent);
+			this.app.vault.modify(file, newContent);
 		}
 	}
 
