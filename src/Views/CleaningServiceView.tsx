@@ -1,12 +1,12 @@
 import * as React from "react";
 import { useCallback } from "react";
-import { OperationType } from "src/JanitorSettings";
+import { OperationType } from "src/CleaningServiceSettings";
 
 export interface SelectableItem {
 	selected: boolean;
 	name: string;
 }
-export interface JanitorViewProps {
+export interface CleaningServiceViewProps {
 	scanning: boolean;
 	orphans: SelectableItem[] | false;
 	empty: SelectableItem[] | false;
@@ -22,7 +22,7 @@ export interface JanitorViewProps {
 	onSettingChange: (setting: string, value: any) => void;
 }
 
-export const JanitorView = (props: JanitorViewProps) => {
+export const CleaningServiceView = (props: CleaningServiceViewProps) => {
 	// const [state, setState] = useState({
 	// 	scanning: true,
 	// 	orphans: 0
@@ -60,19 +60,19 @@ export const JanitorView = (props: JanitorViewProps) => {
 	// },[onSettingChange,useSystemTrash]);
 
 	return (
-		<div className="janitor-modal-wrapper">
-			<div className="janitor-modal-title">
+		<div className="cleaning-service-modal-wrapper">
+			<div className="cleaning-service-modal-title">
 				Cleaning Service Scan Results
 			</div>
-			<div className="janitor-modal-content">
+			<div className="cleaning-service-modal-content">
 				{scanning ? <h4>Scanning...</h4> : <ScanResults {...props} />}
 			</div>
-			<div className="janitor-modal-footer">
-				{/* <div className="janitor-footer-settings">
+			<div className="cleaning-service-modal-footer">
+				{/* <div className="cleaning-service-footer-settings">
 					<label htmlFor="useSystemTrash">Use System Trash</label>
 					<input name="useSystemTrash" id="useSystemTrash" type="checkbox" checked={useSystemTrash} onChange={handleTrashChange} />
 				</div> */}
-				<div className="janitor-footer-buttons">
+				<div className="cleaning-service-footer-buttons">
 					<button
 						tabIndex={1}
 						style={{
@@ -160,7 +160,7 @@ function ScanResults({
 	);
 
 	return (
-		<div className="janitor-scan-results">
+		<div className="cleaning-service-scan-results">
 			{/* <fieldset> */}
 			{orphans && orphans.length > 0 && (
 				<FileList
@@ -237,8 +237,8 @@ const FileList = ({
 	const numSelected = files.filter((file) => file.selected).length;
 
 	return (
-		<div className="janitor-files-wrapper">
-			<div className="janitor-scan-section-title">
+		<div className="cleaning-service-files-wrapper">
+			<div className="cleaning-service-scan-section-title">
 				<label
 					title={`Click to ${allSelected ? "unselect" : "select"} these ${files.length} items`}
 				>
@@ -253,7 +253,7 @@ const FileList = ({
 			</div>
 
 			{files.map((file, i) => (
-				<div key={i} className="janitor-file">
+				<div key={i} className="cleaning-service-file">
 					<label>
 						<input
 							checked={file.selected}

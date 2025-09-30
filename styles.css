@@ -1,108 +1,113 @@
-/*
+/* ==========================================================================
+   Obsidian Cleaning Service Plugin Styles
+   ========================================================================== */
 
-This CSS file will be included with your plugin, and
-available in the app when your plugin is enabled.
+/* Don't use width or height style attributes except in special cases */
+/* This ensures the plugin works on mobile */
 
-If your plugin does not need CSS, delete this file.
-
-*/
-.janitor-modal-footer {
+/* Modal Footer */
+.cleaning-service-modal-footer {
 	/* float: right; */
 	padding: 10pt;
 	display: flex;
 }
 
-.janitor-modal-footer button {
+.cleaning-service-modal-footer button {
 	margin-left: 4px;
 }
 
-.janitor-modal-footer .janitor-footer-buttons {
+.cleaning-service-modal-footer .cleaning-service-footer-buttons {
 	flex: 1;
 	justify-content: flex-end;
 	display: flex;
 }
 
-.janitor-scan-section-title {
+.cleaning-service-scan-section-title {
 	font-size: larger;
 	margin-bottom: 5pt;
 	font-weight: 600;
 }
 
-.janitor-modal-title {
-    text-align: center;
-    font-size: 150%;
-    margin-bottom: 10px;
+.cleaning-service-modal-title {
+	text-align: center;
+	font-size: 150%;
+	margin-bottom: 10px;
 }
 
-.janitor-file {
+.cleaning-service-file {
 	margin-left: 1em;
 	position: relative;
 }
 
-.janitor-file:hover {
+.cleaning-service-file:hover {
 	background-color: var(--background-primary);
 }
 
-
-.janitor-file .openFileIcon {
-    right: 0px;
+/* Icon for opening files */
+.cleaning-service-file .openFileIcon {
+	right: 0px;
 	position: absolute;
-    /* cursor: pointer; */
+	/* cursor: pointer; */
 	visibility: hidden;
 }
 
-.janitor-file label {
+.cleaning-service-file label {
 	width: 100%;
 	/* cursor: pointer; */
 	display: flex;
 }
 
-.janitor-file span {
+.cleaning-service-file span {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	margin-right: 4em;
 }
 
-.janitor-file:hover .openFileIcon {
+.cleaning-service-file:hover .openFileIcon {
 	visibility: visible;
 }
 
-.janitor-file:focus {
+.cleaning-service-file:focus {
 	outline: auto;
 }
 
-.janitor-scan-results {
+.cleaning-service-scan-results {
 	overflow-y: auto;
-	max-height:250px;
+	max-height: 250px;
 }
 
-.janitor-files-wrapper {
+.cleaning-service-files-wrapper {
 	/* overflow-y: auto; */
 	/* max-height: 180px; */
 	/* border: 1px solid; */
 	padding: 5px;
 }
 
-.janitor-date-picker {
-	padding: 5px;;
+.cleaning-service-date-picker {
+	padding: 5px;
 }
 
-.janitor-date-picker label span {
-	margin-right: 1em;;
+.cleaning-service-date-picker label span {
+	margin-right: 1em;
 }
 
-
-.janitor-date-picker-buttons {
+/* Date picker buttons */
+.cleaning-service-date-picker-buttons {
 	float: right;
 }
 
-.janitor-date-shortcuts {
+.cleaning-service-date-shortcuts {
 	white-space: nowrap;
 	margin-top: 1em;
 	text-align: center;
 }
 
-.janitor-date-shortcuts .janitor-date-picker-buttons {
+.cleaning-service-date-shortcuts .cleaning-service-date-picker-buttons {
 	display: inline-block;
+}
+
+/* Ribbon icon class */
+.cleaning-service-ribbon-class {
+	/* Custom styles for ribbon icon if needed */
 }

@@ -1,4 +1,4 @@
-import { JanitorSettings } from "./JanitorSettings";
+import { CleaningServiceSettings } from "./CleaningServiceSettings";
 import { App, FrontMatterCache, normalizePath, TFile, TFolder } from "obsidian";
 import { CanvasData, CanvasTextData } from "obsidian/canvas";
 import { asyncFilter, partition } from "./Utils";
@@ -21,10 +21,10 @@ interface IFrontMatter {
 
 export class FileScanner {
 	app: App;
-	settings: JanitorSettings;
+	settings: CleaningServiceSettings;
 	// \S is \s negated
 	whiteSpaceRegExp = new RegExp("\\S", "");
-	constructor(app: App, settings: JanitorSettings) {
+	constructor(app: App, settings: CleaningServiceSettings) {
 		this.app = app;
 		this.settings = settings;
 	}

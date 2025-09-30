@@ -1,4 +1,4 @@
-import { OperationType } from "./JanitorSettings";
+import { OperationType } from "./CleaningServiceSettings";
 import { App, TAbstractFile, TFolder } from "obsidian";
 
 // Extended App type that includes the undocumented fileManager API

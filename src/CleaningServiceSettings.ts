@@ -1,10 +1,9 @@
 export enum OperationType {
 	Trash = "trash",
 	TrashSystem = "trash-system",
-	Delete = "delete"
+	Delete = "delete",
 }
-export interface JanitorSettings {
-
+export interface CleaningServiceSettings {
 	runAtStartup: boolean;
 	addRibbonIcon: boolean;
 	promptUser: boolean;
@@ -25,7 +24,7 @@ export interface JanitorSettings {
 	excludedFilesFilters: string[];
 }
 
-export const DEFAULT_SETTINGS: JanitorSettings = {
+export const DEFAULT_SETTINGS: CleaningServiceSettings = {
 	runAtStartup: false,
 	addRibbonIcon: true,
 	promptUser: true,
@@ -42,5 +41,5 @@ export const DEFAULT_SETTINGS: JanitorSettings = {
 	processBig: false,
 	processEmptyDirectories: true,
 	honorObsidianExcludedFiles: true,
-	excludedFilesFilters: []
-}
+	excludedFilesFilters: [],
+};

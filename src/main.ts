@@ -1,16 +1,19 @@
 import { DatePickerModal } from "./Views/DatePickerModal";
-import { OperationType } from "./JanitorSettings";
-import { JanitorModal } from "./Views/JanitorModal";
+import { OperationType } from "./CleaningServiceSettings";
+import { CleaningServiceModal } from "./Views/CleaningServiceModal";
 
 import { MarkdownView, Notice, Plugin, stringifyYaml } from "obsidian";
 import { FileScanner } from "src/FileScanner";
-import { DEFAULT_SETTINGS, JanitorSettings } from "src/JanitorSettings";
-import JanitorSettingsTab from "src/PluginSettingsTab";
+import {
+	DEFAULT_SETTINGS,
+	CleaningServiceSettings,
+} from "src/CleaningServiceSettings";
+import CleaningServiceSettingsTab from "src/PluginSettingsTab";
 import { FileProcessor } from "src/FileProcessor";
 import moment from "moment";
 
-export default class JanitorPlugin extends Plugin {
-	settings: JanitorSettings;
+export default class CleaningServicePlugin extends Plugin {
+	settings: CleaningServiceSettings;
 	statusBarItemEl: HTMLElement;
 	ribbonIconEl: HTMLElement;
 	initialScanDone = false;
@@ -85,7 +88,7 @@ export default class JanitorPlugin extends Plugin {
 			"year",
 		);
 
-		this.addSettingTab(new JanitorSettingsTab(this.app, this));
+		this.addSettingTab(new CleaningServiceSettingsTab(this.app, this));
 
 		// this.app.workspace.onLayoutReady(()=>{
 		// 	if (this.settings.runAtStartup) {
@@ -204,7 +207,7 @@ export default class JanitorPlugin extends Plugin {
 			(results.big?.length && this.settings.promptForBigFiles) ||
 			forcePrompt
 		) {
-			modal = new JanitorModal(this.app, this);
+			modal = new CleaningServiceModal(this.app, this);
 			modal.open();
 		}
 		if (modal) {
@@ -273,7 +276,7 @@ export default class JanitorPlugin extends Plugin {
 				this.scanFiles();
 			},
 		);
-		this.ribbonIconEl.addClass("janitor-ribbon-class");
+		this.ribbonIconEl.addClass("cleaning-service-ribbon-class");
 	}
 
 	public removeIcon() {

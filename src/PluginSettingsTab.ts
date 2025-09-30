@@ -1,12 +1,15 @@
 import { ExcludedFilesModal } from "./Views/ExcludedFilesModal";
-import { DEFAULT_SETTINGS, JanitorSettings } from "src/JanitorSettings";
-import JanitorPlugin from "./main";
+import {
+	DEFAULT_SETTINGS,
+	CleaningServiceSettings,
+} from "src/CleaningServiceSettings";
+import CleaningServicePlugin from "./main";
 import { App, PluginSettingTab, Setting } from "obsidian";
 
-export default class JanitorSettingsTab extends PluginSettingTab {
-	plugin: JanitorPlugin;
+export default class CleaningServiceSettingsTab extends PluginSettingTab {
+	plugin: CleaningServicePlugin;
 
-	constructor(app: App, plugin: JanitorPlugin) {
+	constructor(app: App, plugin: CleaningServicePlugin) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}
@@ -189,7 +192,7 @@ export default class JanitorSettingsTab extends PluginSettingTab {
 		}
 	}
 
-	private createToggle<K extends keyof JanitorSettings>(
+	private createToggle<K extends keyof CleaningServiceSettings>(
 		containerEl: HTMLElement,
 		name: string,
 		desc: string,

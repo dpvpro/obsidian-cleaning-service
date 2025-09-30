@@ -1,26 +1,21 @@
 import * as React from "react";
 import { App, Modal } from "obsidian";
-import { JanitorSettings } from "src/JanitorSettings";
+import { CleaningServiceSettings } from "src/CleaningServiceSettings";
 import { createRoot, Root } from "react-dom/client";
 import CloseIcon from "../svg/close.svg";
-import { useCallback, useMemo, useRef, useState } from "react";
-import {
-	Info,
-	SettingControl,
-	SettingItem,
-	SettingsInfo,
-} from "./SettingControls";
+import { useCallback, useRef, useState } from "react";
+import { SettingControl, SettingItem, SettingsInfo } from "./SettingControls";
 import { getFolders } from "src/Utils";
 import { SelectObs } from "./Select";
 
 export class ExcludedFilesModal extends Modal {
-	settings: JanitorSettings;
+	settings: CleaningServiceSettings;
 	root: Root;
 	onFiltersChanged: (filters: string[]) => void;
 
 	constructor(
 		app: App,
-		settings: JanitorSettings,
+		settings: CleaningServiceSettings,
 		onFiltersChanged: (filters: string[]) => void,
 	) {
 		super(app);
@@ -194,7 +189,7 @@ function isValidRE(value: string) {
 	let isValid = value.length > 0;
 
 	try {
-		const re = new RegExp(value);
+		new RegExp(value);
 	} catch {
 		isValid = false;
 	}
