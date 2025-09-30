@@ -48,4 +48,4 @@ This plugin is fork [obsidian-janitor](https://github.com/canna71/obsidian-janit
 
 ## History
 
-First version of app was writen "Tue Jul 15 17:44:37 2025 +0300".
+First version of plugin was writen "Tue Jul 15 17:44:37 2025 +0300".
