@@ -1,5 +1,5 @@
 import { ExcludedFilesModal } from "./Views/ExcludedFilesModal";
-import { DEFAULT_SETTINGS } from "src/JanitorSettings";
+import { DEFAULT_SETTINGS, JanitorSettings } from "src/JanitorSettings";
 import JanitorPlugin from "./main";
 import { App, PluginSettingTab, Setting } from "obsidian";
 
@@ -189,20 +189,22 @@ export default class JanitorSettingsTab extends PluginSettingTab {
 		}
 	}
 
-	private createToggle(
+	private createToggle<K extends keyof JanitorSettings>(
 		containerEl: HTMLElement,
 		name: string,
 		desc: string,
-		prop: string,
+		prop: K,
 	) {
 		new Setting(containerEl)
 			.setName(name)
 			.setDesc(desc)
 			.addToggle((bool) =>
 				bool
-					.setValue((this.plugin.settings as any)[prop] as boolean)
+					.setValue(Boolean(this.plugin.settings[prop]))
 					.onChange(async (value) => {
-						(this.plugin.settings as any)[prop] = value;
+						// We use Object.assign to safely update the property
+						// This method should only be used for boolean properties
+						Object.assign(this.plugin.settings, { [prop]: value });
 						await this.plugin.saveSettings();
 						this.display();
 					}),

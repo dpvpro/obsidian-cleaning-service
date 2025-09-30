@@ -1,7 +1,15 @@
-import { OperationType } from './JanitorSettings';
-import { App, TFolder } from 'obsidian';
+import { OperationType } from "./JanitorSettings";
+import { App, TAbstractFile, TFolder } from "obsidian";
+
+// Extended App type that includes the undocumented fileManager API
+type AppWithFileManager = App & {
+	fileManager?: {
+		trashFile: (file: TAbstractFile) => Promise<void>;
+	};
+};
+
 export class FileProcessor {
-	app: App;
+	app: AppWithFileManager;
 
 	constructor(app: App) {
 		this.app = app;
@@ -17,11 +25,17 @@ export class FileProcessor {
 			const tfile = this.app.vault.getAbstractFileByPath(file);
 			if (tfile) {
 				try {
-
 					switch (operation) {
-
 						case OperationType.TrashSystem:
-							await this.app.vault.trash(tfile, true);
+							// Use fileManager to respect user preferences
+							// Note: fileManager is not part of the public Obsidian API types,
+							// but exists at runtime.
+							if (this.app.fileManager) {
+								await this.app.fileManager.trashFile(tfile);
+							} else {
+								// Fallback to regular trash if fileManager is not available
+								await this.app.vault.trash(tfile, true);
+							}
 							deletedFiles++;
 							break;
 
@@ -34,34 +48,49 @@ export class FileProcessor {
 							deletedFiles++;
 							break;
 						default:
-							console.warn(`Warning: operation ${operation} unknown`);
+							console.warn(
+								`Warning: operation ${operation} unknown`,
+							);
 							break;
 					}
 				} catch {
 					notDeletedFiles++;
 				}
-
 			} else {
-				console.warn(`Warning: file ${file} was not found for thrashing!`);
+				console.warn(
+					`Warning: file ${file} was not found for thrashing!`,
+				);
 				notDeletedFiles++;
 			}
 		}
 		return { deletedFiles, notDeletedFiles };
 	}
 
-	async processDirectories(directoriesPaths: string[], operation = OperationType.Trash) {
+	async processDirectories(
+		directoriesPaths: string[],
+		operation = OperationType.Trash,
+	) {
 		// ensures that we don't try to delete the same folder twice
 		const uniq = [...new Set(directoriesPaths)];
 		let deletedDirectories = 0;
 		let notDeletedDirectories = 0;
 
 		for (const directoryPath of uniq) {
-			const directory = this.app.vault.getAbstractFileByPath(directoryPath);
+			const directory =
+				this.app.vault.getAbstractFileByPath(directoryPath);
 			if (directory && directory instanceof TFolder) {
 				try {
 					switch (operation) {
 						case OperationType.TrashSystem:
-							await this.app.vault.trash(directory, true);
+							// Use fileManager to respect user preferences
+							// Note: fileManager is not part of the public Obsidian API types,
+							// but exists at runtime.
+							if (this.app.fileManager) {
+								await this.app.fileManager.trashFile(directory);
+							} else {
+								// Fallback to regular trash if fileManager is not available
+								await this.app.vault.trash(directory, true);
+							}
 							deletedDirectories++;
 							break;
 
@@ -74,17 +103,24 @@ export class FileProcessor {
 							deletedDirectories++;
 							break;
 						default:
-							console.warn(`Warning: operation ${operation} unknown`);
+							console.warn(
+								`Warning: operation ${operation} unknown`,
+							);
 							break;
 					}
 				} catch {
 					notDeletedDirectories++;
 				}
 			} else {
-				console.warn(`Warning: folder ${directoryPath} was not found for deletion!`);
+				console.warn(
+					`Warning: folder ${directoryPath} was not found for deletion!`,
+				);
 				notDeletedDirectories++;
 			}
 		}
-		return { deletedFiles: deletedDirectories, notDeletedFiles: notDeletedDirectories };
+		return {
+			deletedFiles: deletedDirectories,
+			notDeletedFiles: notDeletedDirectories,
+		};
 	}
 }
