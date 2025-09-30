@@ -2,7 +2,7 @@ import { CleaningServiceSettings } from "./CleaningServiceSettings";
 import { App, FrontMatterCache, normalizePath, TFile, TFolder } from "obsidian";
 import { CanvasData, CanvasTextData } from "obsidian/canvas";
 import { asyncFilter, partition } from "./Utils";
-import { moment } from "obsidian";
+import moment from "moment";
 export interface ScanResults {
 	scanning: boolean;
 	orphans: TFile[];
@@ -136,7 +136,7 @@ export class FileScanner {
 	}
 
 	private findExpired(frontMatters: IFrontMatter[]) {
-		const now = moment.now();
+		const now = moment().valueOf();
 		const expired = frontMatters
 			.filter((fm) => {
 				const expires = fm.frontMatter[

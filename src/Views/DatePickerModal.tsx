@@ -2,7 +2,7 @@ import { App, MarkdownView, Modal } from "obsidian";
 import * as React from "react";
 import { createRoot, Root } from "react-dom/client";
 import CleaningServicePlugin from "../main";
-import { moment } from "obsidian";
+import moment from "moment";
 
 export class DatePickerModal extends Modal {
 	plugin: CleaningServicePlugin;
