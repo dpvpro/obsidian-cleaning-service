@@ -2,6 +2,107 @@
    Obsidian Cleaning Service Plugin Styles
    ========================================================================== */
 
+/* Широкое модальное окно для результатов сканирования */
+.modal.cleaning-service-modal {
+	width: 90vw;
+	max-width: 1200px;
+	min-width: 800px;
+}
+
+/* Адаптивные стили для мобильных устройств */
+@media (max-width: 900px) {
+	.modal.cleaning-service-modal {
+		width: 95vw;
+		min-width: unset;
+		max-width: 95vw;
+		margin: 10px;
+	}
+
+	.cleaning-service-files-wrapper {
+		min-width: unset;
+		padding: 8px;
+	}
+
+	.cleaning-service-file span {
+		font-size: 0.9em;
+	}
+
+	.cleaning-service-modal-footer .cleaning-service-footer-buttons {
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 8px;
+	}
+
+	.cleaning-service-modal-footer button {
+		margin: 4px;
+		flex: 1;
+		min-width: 120px;
+	}
+}
+
+/* Контейнер модального окна */
+.cleaning-service-modal-wrapper {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+/* Контент модального окна */
+.cleaning-service-modal-content {
+	width: 100%;
+	flex: 1;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+}
+
+/* Результаты сканирования */
+.cleaning-service-scan-results {
+	width: 100%;
+	overflow-x: auto;
+	overflow-y: auto;
+	max-height: 400px;
+	flex: 1;
+}
+
+/* Имена файлов - убираем обрезку текста */
+.cleaning-service-file span {
+	max-width: none;
+	white-space: normal;
+	word-break: break-word;
+	margin-right: 0;
+	display: inline-block;
+	width: calc(100% - 80px);
+	overflow-wrap: break-word;
+}
+
+/* Обертка для файлов */
+.cleaning-service-files-wrapper {
+	width: 100%;
+	min-width: 600px;
+	margin-bottom: 20px;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 8px;
+	padding: 12px;
+	background-color: var(--background-secondary);
+	box-sizing: border-box;
+}
+
+/* Улучшаем отображение чекбоксов и меток */
+.cleaning-service-file label {
+	width: 100%;
+	/* cursor: pointer; */
+	display: flex;
+	align-items: flex-start;
+	padding: 4px 0;
+}
+
+.cleaning-service-file input[type="checkbox"] {
+	margin-top: 2px;
+	flex-shrink: 0;
+}
+
 /* Don't use width or height style attributes except in special cases */
 /* This ensures the plugin works on mobile */
 
@@ -14,55 +115,81 @@
 
 .cleaning-service-modal-footer button {
 	margin-left: 4px;
+	min-width: 140px;
 }
 
 .cleaning-service-modal-footer .cleaning-service-footer-buttons {
 	flex: 1;
 	justify-content: flex-end;
 	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
 }
 
 .cleaning-service-scan-section-title {
-	font-size: larger;
-	margin-bottom: 5pt;
-	font-weight: 600;
+	font-size: 1.2em;
+	margin-bottom: 12px;
+	font-weight: 700;
+	color: var(--text-normal);
+	padding-bottom: 6px;
+	border-bottom: 2px solid var(--background-modifier-border);
+	display: flex;
+	align-items: center;
+}
+
+.cleaning-service-scan-section-title label {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	cursor: pointer;
+}
+
+.cleaning-service-scan-section-title input[type="checkbox"] {
+	margin-right: 10px;
+	margin-top: 0;
 }
 
 .cleaning-service-modal-title {
 	text-align: center;
-	font-size: 150%;
-	margin-bottom: 10px;
+	font-size: 1.5em;
+	margin-bottom: 20px;
+	flex-shrink: 0;
+	font-weight: 700;
+	color: var(--text-normal);
+	padding-bottom: 12px;
+	border-bottom: 2px solid var(--background-modifier-border);
 }
 
 .cleaning-service-file {
-	margin-left: 1em;
+	margin-left: 0;
 	position: relative;
+	padding: 6px 0;
+	border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.cleaning-service-file:last-child {
+	border-bottom: none;
 }
 
 .cleaning-service-file:hover {
-	background-color: var(--background-primary);
+	background-color: var(--background-modifier-hover);
+	border-radius: 4px;
 }
 
 /* Icon for opening files */
 .cleaning-service-file .openFileIcon {
-	right: 0px;
+	right: 12px;
 	position: absolute;
 	/* cursor: pointer; */
 	visibility: hidden;
+	flex-shrink: 0;
+	top: 50%;
+	transform: translateY(-50%);
 }
 
-.cleaning-service-file label {
-	width: 100%;
-	/* cursor: pointer; */
-	display: flex;
-}
+/* .cleaning-service-file label уже определен выше */
 
-.cleaning-service-file span {
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	margin-right: 4em;
-}
+/* .cleaning-service-file span уже определен выше */
 
 .cleaning-service-file:hover .openFileIcon {
 	visibility: visible;
@@ -72,17 +199,9 @@
 	outline: auto;
 }
 
-.cleaning-service-scan-results {
-	overflow-y: auto;
-	max-height: 250px;
-}
+/* .cleaning-service-scan-results уже определен выше */
 
-.cleaning-service-files-wrapper {
-	/* overflow-y: auto; */
-	/* max-height: 180px; */
-	/* border: 1px solid; */
-	padding: 5px;
-}
+/* .cleaning-service-files-wrapper уже определен выше с улучшенными стилями */
 
 .cleaning-service-date-picker {
 	padding: 5px;

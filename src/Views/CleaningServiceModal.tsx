@@ -167,6 +167,13 @@ export class CleaningServiceModal extends Modal {
 
 	onOpen() {
 		const { contentEl } = this;
+		const modalEl = (this as any).modalEl as HTMLElement;
+
+		// Добавляем класс для широкого модального окна
+		if (modalEl) {
+			modalEl.addClass("mod-wide");
+			modalEl.addClass("cleaning-service-modal");
+		}
 
 		this.root = createRoot(contentEl);
 		this.render();
