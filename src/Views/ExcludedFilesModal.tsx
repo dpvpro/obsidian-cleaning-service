@@ -7,6 +7,7 @@ import { useCallback, useRef, useState } from "react";
 import { SettingControl, SettingItem, SettingsInfo } from "./SettingControls";
 import { getFolders } from "src/Utils";
 import { SelectObs } from "./Select";
+import { ActionMeta, InputActionMeta } from "react-select";
 
 export class ExcludedFilesModal extends Modal {
 	settings: CleaningServiceSettings;
@@ -97,28 +98,35 @@ const ExcudedFilesView = ({
 		});
 	}, []);
 
-	const onChange = useCallback((newValue: any, actionMeta: any) => {
-		if (
-			actionMeta.action === "select-option" ||
-			actionMeta.action === "create-option"
-		) {
-			setState((state) => {
-				if (!isValidRE(newValue.value)) return state;
+	const onChange = useCallback(
+		(newValue: unknown, actionMeta: ActionMeta<unknown>) => {
+			if (
+				actionMeta.action === "select-option" ||
+				actionMeta.action === "create-option"
+			) {
+				setState((state) => {
+					const value = (newValue as { value: string }).value;
+					if (!isValidRE(value)) return state;
 
-				return {
-					...state,
-					filters: [...state.filters, newValue.value],
-					value: "",
-				};
-			});
-		}
-	}, []);
+					return {
+						...state,
+						filters: [...state.filters, value],
+						value: "",
+					};
+				});
+			}
+		},
+		[],
+	);
 
-	const onInputChange = useCallback((newValue: unknown, actionMeta: any) => {
-		if (actionMeta.action === "input-change") {
-			setState((state) => ({ ...state, value: newValue as string }));
-		}
-	}, []);
+	const onInputChange = useCallback(
+		(newValue: unknown, actionMeta: InputActionMeta) => {
+			if (actionMeta.action === "input-change") {
+				setState((state) => ({ ...state, value: newValue as string }));
+			}
+		},
+		[],
+	);
 
 	const onDelete = useCallback((i: number) => {
 		setState((state) => {

@@ -69,7 +69,11 @@ export class DatePickerModal extends Modal {
 			</React.StrictMode>,
 		);
 	}
-	dateShortcut(e: React.MouseEvent<HTMLButtonElement>, n: number, what: any) {
+	dateShortcut(
+		e: React.MouseEvent<HTMLButtonElement>,
+		n: number,
+		what: moment.unitOfTime.DurationConstructor,
+	) {
 		this.date = moment().add(n, what).format("YYYY-MM-DD");
 		this.render();
 	}

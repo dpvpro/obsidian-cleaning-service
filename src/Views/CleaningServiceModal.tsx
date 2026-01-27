@@ -44,7 +44,7 @@ export class CleaningServiceModal extends Modal {
 				this.perform(operation);
 			},
 			// defaultOperation: this.plugin.settings.defaultOperation,
-			onSettingChange: (setting: string, value: any) => {
+			onSettingChange: (setting: string, value: unknown) => {
 				this.onSettingChange(setting, value);
 			},
 			onOpen: (i: number, section: string) => {
@@ -65,8 +65,9 @@ export class CleaningServiceModal extends Modal {
 	/**
 	 * @deprecated The method should not be used
 	 */
-	onSettingChange(setting: string, value: any) {
-		(this.plugin.settings as any)[setting] = value;
+	onSettingChange(setting: string, value: unknown) {
+		(this.plugin.settings as unknown as Record<string, unknown>)[setting] =
+			value;
 		this.plugin.saveSettings();
 		this.state = {
 			...this.state,
@@ -75,14 +76,18 @@ export class CleaningServiceModal extends Modal {
 	}
 
 	async handleOpen(ic: number, section: string) {
-		const files = (this.state as any)[section] as SelectableItem[];
+		const files = (
+			this.state as unknown as Record<string, SelectableItem[] | false>
+		)[section] as SelectableItem[];
 		const item = files[ic];
 		//@ts-ignore
 		await this.app.openWithDefaultApp(item.name);
 	}
 
 	handleSelectionChange(ic: number, section: string) {
-		const files = (this.state as any)[section] as SelectableItem[];
+		const files = (
+			this.state as unknown as Record<string, SelectableItem[] | false>
+		)[section] as SelectableItem[];
 		if (ic >= 0) {
 			// single item toggle
 			const item = files[ic];
@@ -167,7 +172,7 @@ export class CleaningServiceModal extends Modal {
 
 	onOpen() {
 		const { contentEl } = this;
-		const modalEl = (this as any).modalEl as HTMLElement;
+		const modalEl = (this as unknown as { modalEl: HTMLElement }).modalEl;
 
 		// Добавляем класс для широкого модального окна
 		if (modalEl) {

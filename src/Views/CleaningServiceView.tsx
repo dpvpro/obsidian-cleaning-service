@@ -19,7 +19,7 @@ export interface CleaningServiceViewProps {
 
 	onPerform(operation: string): void;
 	// useSystemTrash: boolean,
-	onSettingChange: (setting: string, value: any) => void;
+	onSettingChange: (setting: string, value: unknown) => void;
 }
 
 export const CleaningServiceView = (props: CleaningServiceViewProps) => {
