@@ -1,9 +1,9 @@
 {
 	"id": "cleaning-service",
 	"name": "Cleaning Service",
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"minAppVersion": "0.15.0",
-	"description": "Performs cleanup tasks on the vault",
+	"description": "Performs cleanup tasks on the vault.",
 	"author": "Denis Proskurin",
 	"authorUrl": "https://github.com/dpvpro",
 	"isDesktopOnly": false
