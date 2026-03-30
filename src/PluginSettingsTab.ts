@@ -19,7 +19,7 @@ export default class CleaningServiceSettingsTab extends PluginSettingTab {
 
 		containerEl.empty();
 
-		containerEl.createEl("h2", { text: "Cleaning service settings" });
+		new Setting(containerEl).setName("Startup and ribbon").setHeading();
 
 		new Setting(containerEl)
 			.setName("Add ribbon icon")
@@ -94,9 +94,9 @@ export default class CleaningServiceSettingsTab extends PluginSettingTab {
 
 		if (this.plugin.settings.processBig) {
 			new Setting(containerEl)
-				.setName("File size limit (KB)")
+				.setName("File size limit (kb)")
 				.setDesc(
-					"Files larger than this size will be considered for removal.",
+					"Files larger than this size are considered for removal.",
 				)
 				.addText((num) =>
 					num
@@ -122,16 +122,16 @@ export default class CleaningServiceSettingsTab extends PluginSettingTab {
 		);
 
 		if (this.plugin.settings.processExpired) {
-			containerEl.createEl("h3", { text: "Expiration processing" });
+			new Setting(containerEl).setName("Expiration processing").setHeading();
 
 			new Setting(containerEl)
 				.setName("Metadata attribute")
 				.setDesc(
-					"The frontMatter key in which to search for expiration date",
+					"The frontmatter key in which to search for expiration date",
 				)
 				.addText((date) =>
 					date
-						.setPlaceholder("Insert attribute name (es: expires)")
+						.setPlaceholder("Insert attribute name (e.g. expires)")
 						.setValue(this.plugin.settings.expiredAttribute)
 						.onChange(async (value) => {
 							this.plugin.settings.expiredAttribute = value;
@@ -141,7 +141,7 @@ export default class CleaningServiceSettingsTab extends PluginSettingTab {
 			new Setting(containerEl)
 				.setName("Date format")
 				.setDesc(
-					"The format in which the expiration date is stored (e.g. YYYY-MM-DD)",
+					"The format in which the expiration date is stored (e.g. yyyy-mm-dd)",
 				)
 				.addText((text) =>
 					text
@@ -154,7 +154,7 @@ export default class CleaningServiceSettingsTab extends PluginSettingTab {
 				);
 		}
 
-		containerEl.createEl("h3", { text: "File exclusions" });
+		new Setting(containerEl).setName("File exclusions").setHeading();
 
 		this.createToggle(
 			containerEl,
@@ -168,14 +168,15 @@ export default class CleaningServiceSettingsTab extends PluginSettingTab {
 			.setDesc("Excluded files will not be processed")
 			.addButton((cb) => {
 				cb.setButtonText("Manage");
-				cb.onClick((evt: MouseEvent) => {
+				cb.onClick(() => {
 					new ExcludedFilesModal(
 						this.app,
 						this.plugin.settings,
-						async (filters: string[]) => {
+						(filters: string[]) => {
 							this.plugin.settings.excludedFilesFilters = filters;
-							await this.plugin.saveSettings();
-							this.display();
+							void this.plugin.saveSettings().then(() => {
+								this.display();
+							});
 						},
 					).open();
 				});

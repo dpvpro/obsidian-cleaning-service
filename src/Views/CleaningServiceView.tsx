@@ -17,9 +17,8 @@ export interface CleaningServiceViewProps {
 	onSelectionChange: (i: number, section: string) => void;
 	onOpen: (i: number, section: string) => void;
 
-	onPerform(operation: string): void;
+	onPerform(operation: OperationType): void;
 	// useSystemTrash: boolean,
-	onSettingChange: (setting: string, value: unknown) => void;
 }
 
 export const CleaningServiceView = (props: CleaningServiceViewProps) => {
@@ -28,6 +27,7 @@ export const CleaningServiceView = (props: CleaningServiceViewProps) => {
 	// 	orphans: 0
 	// });
 	const { scanning, onClose, onPerform } = props;
+	// eslint-disable-next-line @typescript-eslint/unbound-method
 	const somethingSelected = [
 		props.orphans,
 		props.empty,
@@ -53,7 +53,7 @@ export const CleaningServiceView = (props: CleaningServiceViewProps) => {
 		OperationType,
 	).reduce((ob, opType) => {
 		return { ...ob, [opType]: handlePerform(opType) };
-	}, {});
+	}, {} as { [op: string]: () => void });
 
 	// const handleTrashChange = useCallback(()=>{
 	// 	onSettingChange("useSystemTrash", !useSystemTrash);
@@ -220,7 +220,7 @@ const FileList = ({
 }) => {
 	const handleOnChange = useCallback(
 		(i: number) =>
-			useCallback(() => {
+			useCallback((): void => {
 				onChange(i);
 			}, [onChange, i]),
 		[onChange],
@@ -228,7 +228,7 @@ const FileList = ({
 
 	const handleOpen = useCallback(
 		(i: number) =>
-			useCallback(() => {
+			useCallback((): void => {
 				onOpen(i);
 			}, [onChange, i]),
 		[onChange],

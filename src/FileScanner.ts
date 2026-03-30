@@ -2,7 +2,23 @@ import { CleaningServiceSettings } from "./CleaningServiceSettings";
 import { App, FrontMatterCache, normalizePath, TFile, TFolder } from "obsidian";
 import { CanvasData, CanvasTextData } from "obsidian/canvas";
 import { asyncFilter, partition } from "./Utils";
-import moment from "moment";
+
+// moment is globally available in Obsidian
+declare const moment: {
+    (): Moment;
+    (date: string, format?: string): Moment;
+    unitOfTime: {
+        DurationConstructor: string;
+    };
+};
+
+interface Moment {
+    format(format?: string): string;
+    add(n: number, unit: string): Moment;
+    isBefore(date: number): boolean;
+    isValid(): boolean;
+    valueOf(): number;
+}
 export interface ScanResults {
 	scanning: boolean;
 	orphans: TFile[];
@@ -29,14 +45,14 @@ export class FileScanner {
 		this.settings = settings;
 	}
 
-	isNote(file: TFile): boolean {
+	isNote(this: void, file: TFile): boolean {
 		return (
 			file.extension.toLowerCase() === "md" ||
 			file.extension.toLowerCase() === "canvas"
 		);
 	}
 
-	isCanvas(file: TFile): boolean {
+	isCanvas(this: void, file: TFile): boolean {
 		return file.extension.toLowerCase() === "canvas";
 	}
 	async scan() {
@@ -177,7 +193,7 @@ export class FileScanner {
 			this.getResolvedLinks();
 
 		const canvasResources = await this.getCanvasResources(
-			notes.filter(this.isCanvas),
+			notes.filter((file) => this.isCanvas(file)),
 		);
 
 		const resolvedResources = this.combineLinksAndResolvedMetadata(
@@ -330,7 +346,7 @@ export class FileScanner {
 		).reduce((rl: { [key: string]: number }, fileName: string) => {
 			return Object.assign(
 				rl,
-				this.app.metadataCache.resolvedLinks[fileName],
+				this.app.metadataCache.resolvedLinks[fileName] as { [key: string]: number },
 			);
 		}, {});
 		return resolvedLinks;

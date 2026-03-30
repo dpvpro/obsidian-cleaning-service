@@ -46,37 +46,36 @@ const createLabel = ({ value, label }: { label: string; value: string }) => {
 	return <span>{label.replace("{0}", value)}</span>;
 };
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-const customStyles: StylesConfig<any, false, any> = {
-	option: (provided: any, state: any) => ({
+const customStyles: StylesConfig = {
+	option: (provided, state) => ({
 		...provided,
 		background: state.isFocused
 			? "var(--background-secondary)"
 			: "var(--background-primary)",
 		color: "var(--text-normal)",
 	}),
-	valueContainer: (provided: any) => ({
+	valueContainer: (provided) => ({
 		...provided,
 		padding: "0 6px",
 	}),
-	menu: (provided: any) => ({
+	menu: (provided) => ({
 		...provided,
 	}),
-	menuList: (provided: any) => ({
+	menuList: (provided) => ({
 		...provided,
 		background: "var(--background-primary)",
 		padding: 0,
 		color: "var(--text-normal)",
 	}),
-	input: (provided: any) => ({
+	input: (provided) => ({
 		...provided,
 		color: "var(--text-normal)",
 	}),
-	singleValue: (provided: any) => ({
+	singleValue: (provided) => ({
 		...provided,
 		color: "var(--text-normal)",
 	}),
-	control: (provided: any) => ({
+	control: (provided) => ({
 		...provided,
 		background: "var(--background-modifier-form-field)",
 		color: "var(--text-normal)",
@@ -84,9 +83,8 @@ const customStyles: StylesConfig<any, false, any> = {
 		boxShadow: "none",
 		width: "300px",
 	}),
-	menuPortal: (base: any) => ({
+	menuPortal: (base) => ({
 		...base,
 		zIndex: "var(--layer-modal)",
 	}),
 };
-/* eslint-enable @typescript-eslint/no-explicit-any */

@@ -10,7 +10,23 @@ import {
 } from "src/CleaningServiceSettings";
 import CleaningServiceSettingsTab from "src/PluginSettingsTab";
 import { FileProcessor } from "src/FileProcessor";
-import moment from "moment";
+
+// moment is globally available in Obsidian
+declare const moment: {
+    (): Moment;
+    (date: string, format?: string): Moment;
+    unitOfTime: {
+        DurationConstructor: string;
+    };
+};
+
+interface Moment {
+    format(format?: string): string;
+    add(n: number, unit: string): Moment;
+    isBefore(date: number): boolean;
+    isValid(): boolean;
+    valueOf(): number;
+}
 
 export default class CleaningServicePlugin extends Plugin {
 	settings: CleaningServiceSettings;
@@ -33,23 +49,23 @@ export default class CleaningServicePlugin extends Plugin {
 		// This adds a simple command that can be triggered anywhere
 		this.addCommand({
 			id: "scan-files",
-			name: "Scan Files",
+			name: "Scan files",
 			callback: () => {
-				this.scanFiles();
+				void this.scanFiles();
 			},
 		});
 		this.addCommand({
 			id: "scan-files-noprompt",
-			name: "Scan Files (without prompt)",
+			name: "Scan files (without prompt)",
 			callback: () => {
-				this.scanFiles(false, true);
+				void this.scanFiles(false, true);
 			},
 		});
 		this.addCommand({
 			id: "scan-files-with-prompt",
-			name: "Scan Files (with prompt)",
+			name: "Scan files (with prompt)",
 			callback: () => {
-				this.scanFiles(true, false);
+				void this.scanFiles(true, false);
 			},
 		});
 
@@ -61,7 +77,7 @@ export default class CleaningServicePlugin extends Plugin {
 					this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (markdownView) {
 					if (!checking) {
-						this.chooseDate(markdownView);
+						void this.chooseDate(markdownView);
 					}
 					return true;
 				}
@@ -71,19 +87,19 @@ export default class CleaningServicePlugin extends Plugin {
 
 		this.createShortcutCommand(
 			"set-expiration-1week",
-			"Set Expiration (1 week)",
+			"Set expiration (1 week)",
 			1,
 			"week",
 		);
 		this.createShortcutCommand(
 			"set-expiration-1month",
-			"Set Expiration (1 month)",
+			"Set expiration (1 month)",
 			1,
 			"month",
 		);
 		this.createShortcutCommand(
 			"set-expiration-1year",
-			"Set Expiration (1 year)",
+			"Set expiration (1 year)",
 			1,
 			"year",
 		);
@@ -99,7 +115,7 @@ export default class CleaningServicePlugin extends Plugin {
 		this.app.metadataCache.on("resolved", () => {
 			if (this.settings.runAtStartup && !this.initialScanDone) {
 				this.initialScanDone = true;
-				this.scanFiles();
+				void this.scanFiles();
 			}
 		});
 	}
@@ -120,11 +136,10 @@ export default class CleaningServicePlugin extends Plugin {
 					this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (markdownView) {
 					if (!checking) {
-						this.updateNoteWithDate(
+						const date = moment().add(n, w).format(this.settings.expiredDateFormat);
+						void this.updateNoteWithDate(
 							markdownView,
-							moment()
-								.add(n, w)
-								.format(this.settings.expiredDateFormat),
+							date,
 						);
 					}
 					return true;
@@ -143,14 +158,15 @@ export default class CleaningServicePlugin extends Plugin {
 			return;
 		}
 		const file = view.file;
-		const metaData = this.app.metadataCache.getFileCache(file)?.frontmatter;
-		let start = metaData?.position.start.offset || 0;
-		let end = metaData?.position.end.offset || 0;
+		const fileCache = this.app.metadataCache.getFileCache(file);
+		const metaData = fileCache?.frontmatter;
+		const position = fileCache?.frontmatter?.position as { start: { offset: number }; end: { offset: number } } | undefined;
+		let start: number = position?.start?.offset ?? 0;
+		let end: number = position?.end?.offset ?? 0;
 		// no metadata could also mean empty metadata secion
-		const newMetadata = {
+		const newMetadata: Record<string, unknown> = {
 			...metaData,
-			...{ [this.settings.expiredAttribute]: dateToSet },
-			position: undefined,
+			[this.settings.expiredAttribute]: dateToSet,
 		};
 		const newYaml = stringifyYaml(newMetadata);
 		const content = await this.app.vault.cachedRead(file);
@@ -173,7 +189,7 @@ export default class CleaningServicePlugin extends Plugin {
 				content.substring(0, start) +
 				frontMatter +
 				content.substring(end);
-			this.app.vault.modify(file, newContent);
+			void this.app.vault.modify(file, newContent);
 		}
 	}
 
@@ -182,8 +198,8 @@ export default class CleaningServicePlugin extends Plugin {
 	}
 
 	private async scanFiles(forcePrompt = false, noPrompt = false) {
-		new Notice("Cleaning Service is scanning vault");
-		this.updateStatusBar("Cleaning Service Scanning...");
+		new Notice("Cleaning service is scanning vault");
+		this.updateStatusBar("Cleaning service scanning...");
 		let modal;
 		const results = await new FileScanner(this.app, this.settings).scan();
 		// artificially introduce waiting for testing purposes
@@ -196,7 +212,7 @@ export default class CleaningServicePlugin extends Plugin {
 			(results.emptyDirectories && results.emptyDirectories.length);
 		this.updateStatusBar("");
 		if (!foundSomething) {
-			new Notice(`Cleaning Service scanned and found nothing to cleanup`);
+			new Notice(`Cleaning service scanned and found nothing to clean up`);
 			return;
 		}
 		// We determine if we have to prompt the user,
@@ -271,9 +287,9 @@ export default class CleaningServicePlugin extends Plugin {
 		this.removeIcon();
 		this.ribbonIconEl = this.addRibbonIcon(
 			"trash",
-			"Cleaning service: scan vault",
-			(evt: MouseEvent) => {
-				this.scanFiles();
+			"Cleaning service: scan files",
+			() => {
+				void this.scanFiles();
 			},
 		);
 		this.ribbonIconEl.addClass("cleaning-service-ribbon-class");
@@ -286,10 +302,11 @@ export default class CleaningServicePlugin extends Plugin {
 	}
 
 	async loadSettings() {
+		const data = await this.loadData() as Partial<CleaningServiceSettings>;
 		this.settings = Object.assign(
 			{},
 			DEFAULT_SETTINGS,
-			await this.loadData(),
+			data,
 		);
 	}
 

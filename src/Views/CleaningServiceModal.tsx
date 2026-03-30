@@ -10,6 +10,10 @@ import { ScanResults } from "../FileScanner";
 import CleaningServicePlugin from "../main";
 import { OperationType } from "../CleaningServiceSettings";
 
+type AppWithDefaultApp = App & {
+	openWithDefaultApp: (path: string) => Promise<void>;
+};
+
 function changeSelection(
 	list: SelectableItem[],
 	names: string[],
@@ -41,11 +45,7 @@ export class CleaningServiceModal extends Modal {
 				this.handleSelectionChange(i, section);
 			},
 			onPerform: (operation: OperationType) => {
-				this.perform(operation);
-			},
-			// defaultOperation: this.plugin.settings.defaultOperation,
-			onSettingChange: (setting: string, value: unknown) => {
-				this.onSettingChange(setting, value);
+				void this.onPerform(operation);
 			},
 			onOpen: (i: number, section: string) => {
 				this.handleOpen(i, section);
@@ -55,24 +55,15 @@ export class CleaningServiceModal extends Modal {
 	perform(operation: OperationType) {
 		const files = this.extractFiles();
 		const folders = this.extractDirectories();
-		this.plugin.perform(operation, files);
+		void this.plugin.perform(operation, files);
 		if (folders.length > 0) {
-			this.plugin.performOnDirectories(operation, folders);
+			void this.plugin.performOnDirectories(operation, folders);
 		}
 		this.close();
 	}
 
-	/**
-	 * @deprecated The method should not be used
-	 */
-	onSettingChange(setting: string, value: unknown) {
-		(this.plugin.settings as unknown as Record<string, unknown>)[setting] =
-			value;
-		this.plugin.saveSettings();
-		this.state = {
-			...this.state,
-		};
-		this.render();
+	onPerform(operation: OperationType) {
+		void this.perform(operation);
 	}
 
 	async handleOpen(ic: number, section: string) {
@@ -80,8 +71,7 @@ export class CleaningServiceModal extends Modal {
 			this.state as unknown as Record<string, SelectableItem[] | false>
 		)[section] as SelectableItem[];
 		const item = files[ic];
-		//@ts-ignore
-		await this.app.openWithDefaultApp(item.name);
+		await (this.app as AppWithDefaultApp).openWithDefaultApp(item.name);
 	}
 
 	handleSelectionChange(ic: number, section: string) {

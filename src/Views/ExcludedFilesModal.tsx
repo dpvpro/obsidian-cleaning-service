@@ -21,7 +21,7 @@ export class ExcludedFilesModal extends Modal {
 	) {
 		super(app);
 		this.settings = settings;
-		this.titleEl.setText("Cleaning Service Excluded Files");
+		this.titleEl.setText("Cleaning service excluded files");
 		this.onFiltersChanged = onFiltersChanged;
 	}
 
@@ -42,7 +42,9 @@ export class ExcludedFilesModal extends Modal {
 					}}
 					onFilterChanged={(filters: string[]) => {
 						this.close();
-						this.onFiltersChanged && this.onFiltersChanged(filters);
+						if (this.onFiltersChanged) {
+							this.onFiltersChanged(filters);
+						}
 					}}
 				/>
 			</React.StrictMode>,
@@ -138,7 +140,9 @@ const ExcudedFilesView = ({
 	}, []);
 
 	const onDone = useCallback(() => {
-		onFilterChanged && onFilterChanged(state.filters);
+		if (onFilterChanged) {
+			onFilterChanged(state.filters);
+		}
 	}, [state.filters]);
 
 	const isValid = isValidRE(state.value);

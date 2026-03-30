@@ -1,5 +1,5 @@
 import { OperationType } from "./CleaningServiceSettings";
-import { App, TAbstractFile, TFolder } from "obsidian";
+import { App, TAbstractFile, TFolder, Notice } from "obsidian";
 
 // Extended App type that includes the undocumented fileManager API
 type AppWithFileManager = App & {
@@ -48,8 +48,8 @@ export class FileProcessor {
 							deletedFiles++;
 							break;
 						default:
-							console.warn(
-								`Warning: operation ${operation} unknown`,
+							new Notice(
+								`Warning: operation ${String(operation)} unknown`,
 							);
 							break;
 					}
@@ -57,7 +57,7 @@ export class FileProcessor {
 					notDeletedFiles++;
 				}
 			} else {
-				console.warn(
+				new Notice(
 					`Warning: file ${file} was not found for thrashing!`,
 				);
 				notDeletedFiles++;
@@ -103,8 +103,8 @@ export class FileProcessor {
 							deletedDirectories++;
 							break;
 						default:
-							console.warn(
-								`Warning: operation ${operation} unknown`,
+							new Notice(
+								`Warning: operation ${String(operation)} unknown`,
 							);
 							break;
 					}
@@ -112,7 +112,7 @@ export class FileProcessor {
 					notDeletedDirectories++;
 				}
 			} else {
-				console.warn(
+				new Notice(
 					`Warning: folder ${directoryPath} was not found for deletion!`,
 				);
 				notDeletedDirectories++;

@@ -2,13 +2,26 @@ import { App, MarkdownView, Modal } from "obsidian";
 import * as React from "react";
 import { createRoot, Root } from "react-dom/client";
 import CleaningServicePlugin from "../main";
-import moment from "moment";
+
+// moment is globally available in Obsidian
+declare const moment: {
+    (): Moment;
+    (date: string, format?: string): Moment;
+};
+
+interface Moment {
+    format(format?: string): string;
+    add(n: number, unit: string): Moment;
+    isBefore(date: number): boolean;
+    isValid(): boolean;
+    valueOf(): number;
+}
 
 export class DatePickerModal extends Modal {
 	plugin: CleaningServicePlugin;
-	root: Root;
+	root!: Root;
 	view: MarkdownView;
-	date: string;
+	date = "";
 
 	constructor(app: App, plugin: CleaningServicePlugin, view: MarkdownView) {
 		super(app);
@@ -31,7 +44,7 @@ export class DatePickerModal extends Modal {
 							/>
 						</label>
 						<div className="cleaning-service-date-picker-buttons">
-							<button type="button" onClick={(e) => this.close()}>
+							<button type="button" onClick={(): void => { this.close(); }}>
 								Cancel{" "}
 							</button>
 							<button className="mod-cta" type="submit">
@@ -40,24 +53,30 @@ export class DatePickerModal extends Modal {
 						</div>
 						<div className="cleaning-service-date-shortcuts">
 							<button
-								onClick={(e) =>
-									this.dateShortcut(e, 1, "weeks")
+								onClick={
+									// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+									(e) =>
+										this.dateShortcut(e, 1, "weeks")
 								}
 								className="cleaning-service-date-shortcut-button"
 							>
 								In a Week
 							</button>
 							<button
-								onClick={(e) =>
-									this.dateShortcut(e, 1, "months")
+								onClick={
+									// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+									(e) =>
+										this.dateShortcut(e, 1, "months")
 								}
 								className="cleaning-service-date-shortcut-button"
 							>
 								In a Month
 							</button>
 							<button
-								onClick={(e) =>
-									this.dateShortcut(e, 1, "years")
+								onClick={
+									// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+									(e) =>
+										this.dateShortcut(e, 1, "years")
 								}
 								className="cleaning-service-date-shortcut-button"
 							>
@@ -83,7 +102,7 @@ export class DatePickerModal extends Modal {
 		const dateToSet = moment(this.date, "YYYY-MM-DD").format(
 			this.plugin.settings.expiredDateFormat,
 		);
-		this.plugin.updateNoteWithDate(this.view, dateToSet);
+		void this.plugin.updateNoteWithDate(this.view, dateToSet);
 		this.close();
 		return false;
 	}
@@ -95,7 +114,7 @@ export class DatePickerModal extends Modal {
 
 	onOpen() {
 		const { contentEl } = this;
-		this.root = createRoot(contentEl);
+		this.root = createRoot(contentEl) as unknown as Root;
 		this.render();
 	}
 
