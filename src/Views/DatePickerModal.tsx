@@ -53,30 +53,24 @@ export class DatePickerModal extends Modal {
 						</div>
 						<div className="cleaning-service-date-shortcuts">
 							<button
-								onClick={
-									// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-									(e) =>
-										this.dateShortcut(e, 1, "weeks")
+								onClick={(e) =>
+									this.dateShortcut(e, 1, "weeks")
 								}
 								className="cleaning-service-date-shortcut-button"
 							>
 								In a Week
 							</button>
 							<button
-								onClick={
-									// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-									(e) =>
-										this.dateShortcut(e, 1, "months")
+								onClick={(e) =>
+									this.dateShortcut(e, 1, "months")
 								}
 								className="cleaning-service-date-shortcut-button"
 							>
 								In a Month
 							</button>
 							<button
-								onClick={
-									// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-									(e) =>
-										this.dateShortcut(e, 1, "years")
+								onClick={(e) =>
+									this.dateShortcut(e, 1, "years")
 								}
 								className="cleaning-service-date-shortcut-button"
 							>

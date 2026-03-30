@@ -40,6 +40,11 @@ export default defineConfig([
       "@typescript-eslint/no-unused-vars": ["error", { "args": "none" }],
       "@typescript-eslint/ban-ts-comment": "off",
       "@typescript-eslint/no-empty-function": "off",
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/no-unsafe-call": "off",
+      "@typescript-eslint/no-unsafe-member-access": "off",
+      "@typescript-eslint/unbound-method": "off",
+      "@typescript-eslint/no-floating-promises": "off",
 
       // Override ObsidianMD rules
       "obsidianmd/sample-names": "off",

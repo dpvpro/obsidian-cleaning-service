@@ -48,7 +48,7 @@ export class CleaningServiceModal extends Modal {
 				void this.onPerform(operation);
 			},
 			onOpen: (i: number, section: string) => {
-				this.handleOpen(i, section);
+				void this.handleOpen(i, section);
 			},
 		};
 	}

@@ -27,7 +27,6 @@ export const CleaningServiceView = (props: CleaningServiceViewProps) => {
 	// 	orphans: 0
 	// });
 	const { scanning, onClose, onPerform } = props;
-	// eslint-disable-next-line @typescript-eslint/unbound-method
 	const somethingSelected = [
 		props.orphans,
 		props.empty,
