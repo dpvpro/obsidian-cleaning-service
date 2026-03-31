@@ -42,7 +42,7 @@ export default class CleaningServiceSettingsTab extends PluginSettingTab {
 		this.createToggle(
 			containerEl,
 			"Run at startup",
-			"The plugin will perform a scan automatically everytime you open a vault.",
+			"The plugin will perform a scan automatically everytime you open a vault",
 			"runAtStartup",
 		);
 
@@ -94,9 +94,9 @@ export default class CleaningServiceSettingsTab extends PluginSettingTab {
 
 		if (this.plugin.settings.processBig) {
 			new Setting(containerEl)
-				.setName("File size limit (KB)")
+				.setName("File size limit in kilobytes")
 				.setDesc(
-					"Files larger than this size are considered for removal.",
+					"Files larger than this size are considered for removal",
 				)
 				.addText((num) =>
 					num
@@ -141,7 +141,7 @@ export default class CleaningServiceSettingsTab extends PluginSettingTab {
 			new Setting(containerEl)
 				.setName("Date format")
 				.setDesc(
-					"The format in which the expiration date is stored (e.g. YYYY-MM-DD)",
+					"The format in which the expiration date is stored",
 				)
 				.addText((text) =>
 					text

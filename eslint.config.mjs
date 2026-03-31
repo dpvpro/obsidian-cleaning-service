@@ -43,14 +43,6 @@ export default defineConfig([
       	"obsidianmd/prefer-file-manager-trash-file": "off",
       	"require-await": "error",
 
-       	"obsidianmd/ui/sentence-case": [
-         	"off",
-         	{
-          		// ignoreWords: ["YYYY-MM-DD"],
-           		// brands: ["DP"],
-          		acronyms: ["KB", "YYYY-MM-DD"],
-         	},
-       	],
     },
   },
 
