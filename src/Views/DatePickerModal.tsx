@@ -91,7 +91,7 @@ export class DatePickerModal extends Modal {
 		this.render();
 	}
 
-	onApply(event: React.FormEvent) {
+	onApply(event: React.SyntheticEvent) {
 		event.preventDefault();
 		const dateToSet = moment(this.date, "YYYY-MM-DD").format(
 			this.plugin.settings.expiredDateFormat,
