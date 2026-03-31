@@ -16,18 +16,18 @@
 		"@types/node": "^25.5.0",
 		"@types/react": "^19.2.14",
 		"@types/react-dom": "^19.2.3",
-		"builtin-modules": "3.3.0",
-		"esbuild": "0.27.2",
-		"esbuild-plugin-svgr": "^1.0.1",
-		"eslint": "^9.39.4",
+		"builtin-modules": "5.0.0",
+		"esbuild": "0.25.5",
+		"esbuild-plugin-svgr": "3.1.1",
+		"eslint": "10.1.0",
 		"eslint-plugin-obsidianmd": "^0.1.9",
 		"obsidian": "latest",
 		"tslib": "^2.8.1",
-		"typescript": "^4.8.4"
+		"typescript": "5.9.3"
 	},
 	"dependencies": {
-		"react": "^18.2.0",
-		"react-dom": "^18.2.0",
+		"react": "19.2.4",
+		"react-dom": "19.2.4",
 		"react-select": "^5.4.0"
 	}
 }
