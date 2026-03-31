@@ -17,7 +17,7 @@ export interface CleaningServiceViewProps {
 	onSelectionChange: (i: number, section: string) => void;
 	onOpen: (i: number, section: string) => void;
 
-	onPerform(operation: OperationType): void;
+	onPerform(this: void, operation: OperationType): void;
 	// useSystemTrash: boolean,
 }
 
