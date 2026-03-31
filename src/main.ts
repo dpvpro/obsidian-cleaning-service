@@ -77,7 +77,7 @@ export default class CleaningServicePlugin extends Plugin {
 					this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (markdownView) {
 					if (!checking) {
-						void this.chooseDate(markdownView);
+						this.chooseDate(markdownView);
 					}
 					return true;
 				}
@@ -149,7 +149,7 @@ export default class CleaningServicePlugin extends Plugin {
 		});
 	}
 
-	async chooseDate(view: MarkdownView) {
+	chooseDate(view: MarkdownView) {
 		new DatePickerModal(this.app, this, view).open();
 	}
 
