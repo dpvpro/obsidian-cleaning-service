@@ -7,6 +7,7 @@
 	width: 90vw;
 	max-width: 1200px;
 	min-width: 800px;
+	height: 70vh;
 }
 
 /* Адаптивные стили для мобильных устройств */
@@ -46,24 +47,27 @@
 	display: flex;
 	flex-direction: column;
 	height: 100%;
+	overflow: hidden;
 }
 
 /* Контент модального окна */
 .cleaning-service-modal-content {
 	width: 100%;
 	flex: 1;
-	overflow: hidden;
+	overflow: visible;
 	display: flex;
 	flex-direction: column;
+	min-height: 0;
 }
 
 /* Результаты сканирования */
 .cleaning-service-scan-results {
 	width: 100%;
-	overflow-x: auto;
-	overflow-y: auto;
-	max-height: 400px;
+	overflow: visible;
 	flex: 1;
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
 }
 
 /* Имена файлов - убираем обрезку текста */
@@ -77,7 +81,7 @@
 	overflow-wrap: break-word;
 }
 
-/* Обертка для файлов */
+/* Обертка для файлов - с прокруткой */
 .cleaning-service-files-wrapper {
 	width: 100%;
 	min-width: 600px;
@@ -87,6 +91,9 @@
 	padding: 12px;
 	background-color: var(--background-secondary);
 	box-sizing: border-box;
+	overflow-y: auto;
+	max-height: calc(70vh - 200px);
+	flex: 1;
 }
 
 /* Улучшаем отображение чекбоксов и меток */
@@ -111,6 +118,7 @@
 	/* float: right; */
 	padding: 10pt;
 	display: flex;
+	flex-shrink: 0;
 }
 
 .cleaning-service-modal-footer button {
