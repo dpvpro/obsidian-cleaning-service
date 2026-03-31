@@ -94,7 +94,7 @@ export default class CleaningServiceSettingsTab extends PluginSettingTab {
 
 		if (this.plugin.settings.processBig) {
 			new Setting(containerEl)
-				.setName("File size limit (kb)")
+				.setName("File size limit (KB)")
 				.setDesc(
 					"Files larger than this size are considered for removal.",
 				)
@@ -131,7 +131,7 @@ export default class CleaningServiceSettingsTab extends PluginSettingTab {
 				)
 				.addText((date) =>
 					date
-						.setPlaceholder("Insert attribute name (e.g. expires)")
+						.setPlaceholder("Insert attribute name (es: expires)")
 						.setValue(this.plugin.settings.expiredAttribute)
 						.onChange(async (value) => {
 							this.plugin.settings.expiredAttribute = value;
@@ -141,7 +141,7 @@ export default class CleaningServiceSettingsTab extends PluginSettingTab {
 			new Setting(containerEl)
 				.setName("Date format")
 				.setDesc(
-					"The format in which the expiration date is stored (e.g. yyyy-mm-dd)",
+					"The format in which the expiration date is stored (e.g. YYYY-MM-DD)",
 				)
 				.addText((text) =>
 					text
