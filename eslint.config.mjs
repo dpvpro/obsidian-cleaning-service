@@ -36,25 +36,21 @@ export default defineConfig([
       },
     },
     rules: {
-      // Override TypeScript rules
-      "@typescript-eslint/no-unused-vars": ["error", { "args": "none" }],
-      "@typescript-eslint/ban-ts-comment": "off",
-      "@typescript-eslint/no-empty-function": "off",
-      "@typescript-eslint/no-unsafe-assignment": "off",
-      "@typescript-eslint/no-unsafe-call": "off",
-      "@typescript-eslint/no-unsafe-member-access": "off",
-      "@typescript-eslint/unbound-method": "off",
-      "@typescript-eslint/no-floating-promises": "off",
+    	// Override TypeScript rules
+     	"@typescript-eslint/no-unsafe-assignment": "off",
 
-      // Override ObsidianMD rules
-      "obsidianmd/sample-names": "off",
-      "obsidianmd/prefer-file-manager-trash-file": "off",
-      "obsidianmd/ui/sentence-case": "off",
-      "obsidianmd/settings-tab/no-manual-html-headings": "off",
+      	// Override ObsidianMD rules
+      	"obsidianmd/prefer-file-manager-trash-file": "off",
+      	"require-await": "error",
 
-      // Disable restrictive imports (moment is bundled with Obsidian)
-      "no-restricted-imports": "off",
-      "import/no-extraneous-dependencies": "off",
+       	"obsidianmd/ui/sentence-case": [
+         	"off",
+         	{
+          		// ignoreWords: ["YYYY-MM-DD"],
+           		// brands: ["DP"],
+          		acronyms: ["KB", "YYYY-MM-DD"],
+         	},
+       	],
     },
   },
 
