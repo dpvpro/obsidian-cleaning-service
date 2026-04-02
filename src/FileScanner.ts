@@ -203,12 +203,22 @@ export class FileScanner {
 	}
 
 	private async findEmpty(files: TFile[]) {
+		log(`findEmpty: checking ${files.length} files...`, this.settings.enableLogging);
+		const startTime = Date.now();
+		
 		const empty = await asyncFilter(files, async (file) => {
 			if (file.stat.size === 0) return true;
-			const content = await this.app.vault.cachedRead(file);
-			if (!this.whiteSpaceRegExp.test(content)) return true;
-			return false;
-		});
+			try {
+				const content = await this.app.vault.cachedRead(file);
+				if (!this.whiteSpaceRegExp.test(content)) return true;
+				return false;
+			} catch {
+				// File cannot be read as text (binary file) - assume not empty
+				return false;
+			}
+		}, 20, this.settings.enableLogging);
+		
+		log(`findEmpty: found ${empty.length} empty files in ${Date.now() - startTime}ms`, this.settings.enableLogging);
 		return empty;
 	}
 

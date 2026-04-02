@@ -32,7 +32,7 @@ Cleaning service also comes with utilities command used to easily set expiration
 
 ## Excluded files
 
-Cleaning service can exclude files that are excluded by Obsidian (Settings->Files & Linkds->Excluded files) but users can also specify different criterias for exclusions (for example based on file extension or path).
+Cleaning service can exclude files that are excluded by Obsidian (Settings->Files & Links->Excluded files) but users can also specify different criterias for exclusions (for example based on file extension or path).
 
 ## How to run
 
