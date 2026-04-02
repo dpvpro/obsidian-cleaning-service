@@ -35,7 +35,7 @@ const buildOptions = {
 	],
 	format: "cjs",
 	minify: prod,
-	target: "es2016",
+	target: "es2024",
 	logLevel: "info",
 	sourcemap: prod ? false : "inline",
 	treeShaking: true,
