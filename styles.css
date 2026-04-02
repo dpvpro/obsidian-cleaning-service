@@ -60,14 +60,13 @@
 	min-height: 0;
 }
 
-/* Результаты сканирования */
+/* Результаты сканирования - общая прокрутка */
 .cleaning-service-scan-results {
 	width: 100%;
-	overflow: visible;
+	overflow-y: auto;
 	flex: 1;
 	display: flex;
 	flex-direction: column;
-	min-height: 0;
 }
 
 /* Имена файлов - убираем обрезку текста */
@@ -81,19 +80,15 @@
 	overflow-wrap: break-word;
 }
 
-/* Обертка для файлов - с прокруткой */
+/* Обертка для файлов - без прокрутки, высота по контенту */
 .cleaning-service-files-wrapper {
 	width: 100%;
-	min-width: 600px;
 	margin-bottom: 20px;
 	border: 1px solid var(--background-modifier-border);
 	border-radius: 8px;
 	padding: 12px;
 	background-color: var(--background-secondary);
 	box-sizing: border-box;
-	overflow-y: auto;
-	max-height: calc(70vh - 200px);
-	flex: 1;
 }
 
 /* Улучшаем отображение чекбоксов и меток */
