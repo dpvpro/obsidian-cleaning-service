@@ -191,6 +191,15 @@ export default class CleaningServiceSettingsTab extends PluginSettingTab {
 				ul.createEl("li").setText(filter);
 			});
 		}
+
+		new Setting(containerEl).setName("Debug logging").setHeading();
+
+		this.createToggle(
+			containerEl,
+			"Enable logging",
+			"Output scan statistics and progress to the developer console (Ctrl+Shift+I)",
+			"enableLogging",
+		);
 	}
 
 	private createToggle<K extends keyof CleaningServiceSettings>(

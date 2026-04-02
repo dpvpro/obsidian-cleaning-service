@@ -22,6 +22,7 @@ export interface CleaningServiceSettings {
 	processEmptyDirectories: boolean;
 	honorObsidianExcludedFiles: boolean;
 	excludedFilesFilters: string[];
+	enableLogging: boolean;
 }
 
 export const DEFAULT_SETTINGS: CleaningServiceSettings = {
@@ -42,4 +43,5 @@ export const DEFAULT_SETTINGS: CleaningServiceSettings = {
 	processEmptyDirectories: true,
 	honorObsidianExcludedFiles: true,
 	excludedFilesFilters: [],
+	enableLogging: false,
 };

@@ -19,6 +19,13 @@ interface Moment {
     isValid(): boolean;
     valueOf(): number;
 }
+
+// Helper for conditional logging
+function log(message: string, enabled: boolean) {
+	if (enabled) {
+		console.warn(`[CleaningService] ${message}`);
+	}
+}
 export interface ScanResults {
 	scanning: boolean;
 	orphans: TFile[];
@@ -56,7 +63,12 @@ export class FileScanner {
 		return file.extension.toLowerCase() === "canvas";
 	}
 	async scan() {
+		log(`Starting scan...`, this.settings.enableLogging);
+		const startTime = Date.now();
+		
 		const allFiles = this.app.vault.getFiles();
+		log(`Total files in vault: ${allFiles.length}`, this.settings.enableLogging);
+		
 		let exclusionFilters = this.settings.excludedFilesFilters || [];
 		// Note: vault.config is not part of the public Obsidian API types,
 		// but exists at runtime. Using type casting is necessary here.
@@ -79,20 +91,34 @@ export class FileScanner {
 		const files = allFiles.filter((file) => {
 			return !regexes.some((re) => re.exec(file.path));
 		});
+		log(`Files after filtering: ${files.length}`, this.settings.enableLogging);
 
 		const [notes, others] = partition(files, this.isNote);
+		log(`Notes: ${notes.length}, Others: ${others.length}`, this.settings.enableLogging);
+		
 		const frontMatters = this.getFrontMatters(notes);
+		log(`Frontmatters with string props: ${frontMatters.length}`, this.settings.enableLogging);
+		
 		const orphans =
 			this.settings.processOrphans &&
 			(await this.findOrphans(notes, others, frontMatters));
+		log(`Orphans: ${orphans ? orphans.length : 'skipped'}`, this.settings.enableLogging);
+		
 		const empty =
 			this.settings.processEmpty && (await this.findEmpty(files));
+		log(`Empty: ${empty ? empty.length : 'skipped'}`, this.settings.enableLogging);
+		
 		const expired =
 			this.settings.processExpired && this.findExpired(frontMatters);
+		log(`Expired: ${expired ? expired.length : 'skipped'}`, this.settings.enableLogging);
+		
 		const big = this.settings.processBig && this.findBigFiles(files);
+		log(`Big: ${big ? big.length : 'skipped'}`, this.settings.enableLogging);
+		
 		const emptyDirectories =
 			this.settings.processEmptyDirectories &&
 			this.findEmptyDirectories();
+		log(`Empty directories: ${emptyDirectories ? emptyDirectories.length : 'skipped'}`, this.settings.enableLogging);
 
 		const results = {
 			orphans,
@@ -102,6 +128,8 @@ export class FileScanner {
 			emptyDirectories: emptyDirectories,
 			scanning: false,
 		} as ScanResults;
+
+		log(`Scan completed in ${Date.now() - startTime}ms`, this.settings.enableLogging);
 
 		return results;
 	}
