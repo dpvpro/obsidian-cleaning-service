@@ -1,7 +1,7 @@
 {
 	"id": "cleaning-service",
 	"name": "Cleaning Service",
-	"version": "1.7.0",
+	"version": "1.7.1",
 	"minAppVersion": "1.5.12",
 	"description": "Performs cleanup tasks on the vault.",
 	"author": "Denis Proskurin",
