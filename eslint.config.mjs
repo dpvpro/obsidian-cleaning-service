@@ -36,13 +36,8 @@ export default defineConfig([
       },
     },
     rules: {
-    	// Override TypeScript rules
-     	"@typescript-eslint/no-unsafe-assignment": "off",
-
-      	// Override ObsidianMD rules
-      	"obsidianmd/prefer-file-manager-trash-file": "off",
-      	"require-await": "error",
-
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "obsidianmd/prefer-file-manager-trash-file": "off",
     },
   },
 
@@ -51,7 +46,6 @@ export default defineConfig([
     files: ["**/*.mjs", "**/*.js"],
     languageOptions: {
       globals: {
-        // Node.js environment
         console: "readonly",
         process: "readonly",
         require: "readonly",
