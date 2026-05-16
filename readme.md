@@ -45,3 +45,23 @@ Cleaning service scan can also be launched from a ribbon button or from commands
 ## Copyrights
 
 This plugin is fork [obsidian-janitor](https://github.com/canna71/obsidian-janitor) plugin. First version of plugin was rewriten 15.07.2025
+
+## Development
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `npm install` | Install dependencies |
+| `npm run dev` | Start development build with esbuild (watch mode) |
+| `npm run build` | Type-check with `tsc` then production build |
+| `npm run lint` | Run ESLint on the project |
+| `npm run version` | Bump version in manifest.json and versions.json |
+
+### Release
+
+1. Update `version` in `package.json` and `manifest.json`.
+2. Add the new version entry to `versions.json` with the minimum Obsidian version.
+3. Run `npm run version` to sync files.
+4. Run `npm run build` to produce `main.js`.
+5. Commit changes and create a GitHub release with the `main.js`, `manifest.json`, and `styles.css` attached.
