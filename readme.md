@@ -40,14 +40,8 @@ Cleaning service could be set to run at startup. If "ask confirmation" is set, i
 
 Cleaning service scan can also be launched from a ribbon button or from commands.
 
-![Scan Result Dialog](media/dialog.png)
+![Scan Result Dialog](media/results.png)
 
 ## Copyrights
 
-This plugin is fork [obsidian-janitor](https://github.com/canna71/obsidian-janitor) plugin.
-
-First version of plugin was rewriten 15.07.2025
-
-## Development
-
-Process is described [here](https://github.com/obsidianmd/obsidian-sample-plugin)
+This plugin is fork [obsidian-janitor](https://github.com/canna71/obsidian-janitor) plugin. First version of plugin was rewriten 15.07.2025
