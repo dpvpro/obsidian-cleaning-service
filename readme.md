@@ -60,8 +60,8 @@ This plugin is fork [obsidian-janitor](https://github.com/canna71/obsidian-janit
 
 ### Release
 
-1. Update `version` in `package.json` and `manifest.json`.
-2. Add the new version entry to `versions.json` with the minimum Obsidian version.
-3. Run `npm run version` to sync files.
+1. Commit code changes.
+2. Check version entry to `manifest.json` with the minimum Obsidian version.
+3. Make release `npm version 1.7.2`.
 4. Run `npm run build` to produce `main.js`.
-5. Commit changes and create a GitHub release with the `main.js`, `manifest.json`, and `styles.css` attached.
+5. Create a GitHub release with the `main.js`, `manifest.json`, and `styles.css` attached.
