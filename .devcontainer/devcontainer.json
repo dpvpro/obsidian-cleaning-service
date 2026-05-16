@@ -1,0 +1,16 @@
+{
+  "name": "Plugin typescript environment",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:24-trixie",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode"
+      ]
+    }
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "postCreateCommand": "npm install"
+}
