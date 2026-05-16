@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-cleaning-service",
-	"version": "1.7.1",
+	"version": "1.7.2",
 	"description": "Performs cleanup tasks on the Obsidian vault",
 	"main": "main.js",
 	"scripts": {
