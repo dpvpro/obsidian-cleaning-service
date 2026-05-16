@@ -17,17 +17,13 @@ export default defineConfig([
 
   // Configuration for TypeScript source files
   {
-    files: ["src/**/*.ts", "src/**/*.tsx"],
+    files: ["src/**/*.ts"],
     languageOptions: {
       parser: tsparser,
       parserOptions: { project: "./tsconfig.json" },
       globals: {
-        // Obsidian plugin environment
         app: "readonly",
         moment: "readonly",
-        // Browser environment
-        window: "readonly",
-        document: "readonly",
         console: "readonly",
         setTimeout: "readonly",
         setInterval: "readonly",

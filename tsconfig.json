@@ -15,7 +15,6 @@
       "DOM",
       "ES2024"
     ],
-    "jsx": "react",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "paths": {
@@ -23,8 +22,7 @@
     }
   },
   "include": [
-    "./src/**/*.ts",
-    "./src/**/*.tsx"
+    "./src/**/*.ts"
   ],
   "exclude": [
     "node_modules",

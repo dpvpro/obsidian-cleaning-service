@@ -228,3 +228,17 @@
 .cleaning-service-date-shortcuts .cleaning-service-date-picker-buttons {
 	display: inline-block;
 }
+
+/* Action buttons hidden by default, shown when items are selected */
+.cleaning-service-action-btn {
+	visibility: hidden;
+}
+
+.cleaning-service-action-btn.is-visible {
+	visibility: visible;
+}
+
+/* Input field for excluded files filter */
+.cleaning-service-filter-input {
+	width: 300px;
+}
